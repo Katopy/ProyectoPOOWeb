@@ -33,7 +33,7 @@
       <!--Contenido de la parte con 8 columnas-->
 
       <table class="table table-striped table-bordered table-hover">
-        <thead>
+        <thead class="thead-dark">
         <tr>
           <th>Nombre</th>
           <th>Descripción</th>
@@ -49,7 +49,7 @@
           rs = st.executeQuery();
           while (rs.next()) {
         %>
-        <tr id="<%=rs.getString("id")%>">
+        <tr id="<%=rs.getString("id")%>" style="cursor: pointer">
           <td><%=rs.getString("nombre")%></td>
           <td><%=rs.getString("descripcion")%></td>
           <td><%=rs.getString("pdf")%></td>
@@ -68,22 +68,51 @@
     <div class="col-md-4">
       <!--Contenido de la parte con 3 columnas-->
       <div style="border: 1px solid black; border-radius: 10px; padding: 10px;margin-right: 10px">
-      <p class="text-center">Info de solicitud</p>
+      <p class="text-center">INFORMACION DE SOLICITUD</p>
       <form action="">
         <label for="codigo">Codigo:</label> <input type="text" id="codigo" name="codigo" disabled><br>
         <label for="id_usuario">ID_usuario:</label><input type="text" id="id_usuario" name="id_usuario"disabled><br>
         <label for="nombre">Nombre:</label><input type="text" id="nombre" name="nombre" disabled><br>
+        <label for="doc">Documento:</label><input type="text" id="doc" name="doc" disabled><br>
         <label for="descripcion">Descripcion</label><br>
         <textarea id="descripcion" name="descripcion" rows="4" cols="30" disabled></textarea><br>
         <label for="descripcion">Comentario</label><br>
         <textarea id="comenta" name="comenta" rows="4" cols="30"></textarea><br><br>
-        <button class="btn btn-info float-left">Aceptar</button>
-        <button class="btn btn-danger float-right">Rechazar</button>
+        <button class="btn btn-info float-left" id="aprobado" name="aprobado">Aceptar</button>
+        <button class="btn btn-danger float-right" id="rechazado" name="rechazado">Rechazar</button>
         <br><br>
       </form>
       </div>
     </div>
+    <%
+      //Sacamos los parametros para que se actualicen
+    String comenta = request.getParameter("comenta");
+    String codigo = request.getParameter("codigo");//Es el id en tabla
+    //Esta variable será la que haga el cambio de aprobado o rechazado
+    String estado = "";
+      if (request.getParameter("aprobado") != null) {
+        estado = "Aprobado";
+      } else if (request.getParameter("rechazado") != null) {
+        estado = "Rechazado";
+      }
 
+      try {
+        st = conexion.prepareStatement("UPDATE solicitud SET estado=?, comentario=? WHERE id=?");
+        st.setString(1, estado);
+        st.setString(2, comenta);
+        st.setInt(3, Integer.parseInt(codigo));
+        // Ejecutamos la consulta
+        st.executeUpdate();
+
+        // Cerramos los objetos de conexión y consulta
+        st.close();
+        conexion.close();
+      } catch (Exception e) {
+      out.println("<p> Error al procesar la solicitud: " + e.getMessage() + "</p>");
+      out.println("<p> " + comenta + "</p>");
+      out.println("<p>  " + estado + "</p>");
+      }
+    %>
   </div>
 <script>
   $('tr').click(function() {
@@ -99,6 +128,7 @@
     // Actualizar los campos de texto en la columna col-md-4
     $('#codigo').val(id);
     $('#id_usuario').val(id_usuario);
+    $('#doc').val(pdf);
     $('#nombre').val(nombre);
     $('#descripcion').val(descripcion);
     $('#comenta').val(comentario);

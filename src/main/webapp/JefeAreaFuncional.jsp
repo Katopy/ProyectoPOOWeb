@@ -41,7 +41,6 @@
         <th>Estado</th>
         <th>Comentario</th>
         <th>Eliminar</th>
-        <th>Modificar</th>
     </tr>
     </thead>
     <tbody>
@@ -61,7 +60,6 @@
         <td><button class="btn btn-secondary" disabled><%=rs.getString("estado")%></button></td>
         <td><%=rs.getString("comentario")%></td>
         <td><button class="btn btn-danger" onclick="eliminar('<%=rs.getString("id")%>')">Eliminar</button></td>
-        <td><button class="btn btn-success">Modificar</button></td>
     </tr>
         <%
          }

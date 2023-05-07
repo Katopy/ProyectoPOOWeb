@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1:3306
--- Generation Time: May 07, 2023 at 05:25 AM
+-- Generation Time: May 01, 2023 at 03:10 PM
 -- Server version: 8.0.31
 -- PHP Version: 8.0.26
 
@@ -48,21 +48,21 @@ CREATE TABLE IF NOT EXISTS `solicitud` (
   `id` int NOT NULL AUTO_INCREMENT,
   `nombre` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `descripcion` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
-  `pdf` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `url` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `id_usuario` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `estado` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   `comentario` varchar(100) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `solicitud`
 --
 
-INSERT INTO `solicitud` (`id`, `nombre`, `descripcion`, `pdf`, `id_usuario`, `estado`, `comentario`) VALUES
-(55, 'Cristobal Mendoza', 'Nueva vista', '', 'jefeArea1', 'Rechazado', 'Falta información'),
-(107, 'Cristobal Mendoza', 'Nueva vista', 'guia de funciones.pdf', 'jefeArea1', 'En espera', ''),
-(109, 'Katherine Garcìa', 'Gestion de proyecto', 'CUARTA MATRICULA (1).pdf', 'jefeArea2', 'En espera', '');
+INSERT INTO `solicitud` (`id`, `nombre`, `descripcion`, `url`, `id_usuario`, `estado`, `comentario`) VALUES
+(2, 'Ronaldo Mendoza', 'Proyecto', 'project.pdf', 'jefeArea1', 'Espera', 'Confirmar'),
+(55, 'Cristobal Mendoza', 'Nueva vista', '', 'jefeArea1', 'Rechazar', 'Falta información'),
+(60, 'Cristobal Mendoza', 'Nueva Gestion', '', 'jefeArea1', 'Aperturado', '');
 
 -- --------------------------------------------------------
 
@@ -85,8 +85,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
 
 INSERT INTO `usuarios` (`usuariologin`, `passwordlogin`, `nombre`, `empleadoTipo`) VALUES
 ('JefeDesarrollo1', '1234', 'Ronaldo Mendoza', 'JefeDeDesarrollo'),
-('jefeArea1', '1234', 'Cristobal Mendoza', 'JefeAreaFuncional'),
-('jefeArea2', '1234', 'Katherine Garcìa', 'JefeAreaFuncional');
+('jefeArea1', '1234', 'Cristobal Mendoza', 'JefeAreaFuncional');
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
