@@ -18,10 +18,11 @@
     } else if (operacion.equals("logueo")) {
         String usuario = request.getParameter("usuario");
         String password = request.getParameter("password");
+
         String empleadoTipo = "";
 
         try {
-            st = conexion.prepareStatement("SELECT usuariologin, nombre, empleadoTipo FROM usuarios WHERE usuariologin=? and passwordlogin=?");
+            st = conexion.prepareStatement("SELECT usuariologin, nombre, empleadoTipo, idArea FROM usuarios WHERE usuariologin=? and passwordlogin=?");
             st.setString(1, usuario);
             st.setString(2, password);
             rs = st.executeQuery();
@@ -31,6 +32,7 @@
 
                 session_actual.setAttribute("USER", usuario);
                 session_actual.setAttribute("NAME", rs.getString(2));
+                session_actual.setAttribute("idArea", rs.getInt(4));
 
                 //Si el usuario tiene acceso de manera exitosa, deberá redigir a su vista respectiva
                 if(empleadoTipo.equals("JefeAreaFuncional")){

@@ -6,6 +6,8 @@
   HttpSession session_actual = request.getSession(false);
   String usuario = (String) session_actual.getAttribute("USER");
   String nombres = (String) session_actual.getAttribute("NAME");
+  int area = (int) session_actual.getAttribute("idArea");
+
   if (usuario == null) {
     response.sendRedirect("login.html");
   }
@@ -24,6 +26,7 @@
 <jsp:include page="menu.jsp"/>
 <br><br><br>
 <p>Usuario:<i> <%=nombres%> </i></p>
+<p>ID Area: <i><%=area%></i></p>
 <h4 class="text-center">
   Nuevas Solicitudes de casos
 </h4>
@@ -37,6 +40,7 @@
         <tr>
           <th>Nombre</th>
           <th>Descripción</th>
+          <th>Area</th>
           <th>Documento</th>
           <th>Usuario</th>
           <th>Estado</th>
@@ -45,13 +49,15 @@
         </thead>
         <tbody>
         <%
-          st = conexion.prepareStatement("SELECT id, nombre, descripcion, pdf, id_usuario, estado, comentario FROM solicitud");
+          st = conexion.prepareStatement("SELECT id, nombre, descripcion, pdf, id_usuario, estado, comentario, idArea FROM solicitud WHERE idArea=?");
+          st.setInt(1, area);
           rs = st.executeQuery();
           while (rs.next()) {
         %>
         <tr id="<%=rs.getString("id")%>" style="cursor: pointer">
           <td><%=rs.getString("nombre")%></td>
           <td><%=rs.getString("descripcion")%></td>
+          <td><%=rs.getString("idArea")%></td>
           <td><%=rs.getString("pdf")%></td>
           <td><%=rs.getString("id_usuario")%></td>
           <td><button class="btn btn-secondary" disabled><%=rs.getString("estado")%></button></td>
