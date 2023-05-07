@@ -40,8 +40,8 @@
         <th>Usuario</th>
         <th>Estado</th>
         <th>Comentario</th>
-        <th>Modificar</th>
         <th>Eliminar</th>
+        <th>Modificar</th>
     </tr>
     </thead>
     <tbody>
