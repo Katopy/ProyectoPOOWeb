@@ -58,7 +58,6 @@
                     } else {
                         st.setNull(3, Types.BLOB);
                     }
-
                     st.setString(4, usuario);
                     st.setString(5, "En espera");
                     st.setString(6, "");

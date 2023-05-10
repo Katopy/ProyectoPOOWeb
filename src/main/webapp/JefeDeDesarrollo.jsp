@@ -1,4 +1,3 @@
-
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@ page import="jakarta.servlet.http.HttpSession" %>
 <%@ include file="conexion.jsp" %>
@@ -31,51 +30,51 @@
   Nuevas Solicitudes de casos
 </h4>
 
-  <div class="row">
-    <div class="col-md-8">
-      <!--Contenido de la parte con 8 columnas-->
+<div class="row">
+  <div class="col-md-8">
+    <!--Contenido de la parte con 8 columnas-->
 
-      <table class="table table-striped table-bordered table-hover">
-        <thead class="thead-dark">
-        <tr>
-          <th>Nombre</th>
-          <th>Descripción</th>
-          <th>Documento</th>
-          <th>Usuario</th>
-          <th>Estado</th>
-          <th>Comentario</th>
-          <th>Area</th>
-        </tr>
-        </thead>
-        <tbody>
-        <%
-          st = conexion.prepareStatement("SELECT id, nombre, descripcion, pdf, id_usuario, estado, comentario, idArea FROM solicitud WHERE idArea=?");
-          st.setInt(1, area);
-          rs = st.executeQuery();
-          while (rs.next()) {
-        %>
-        <tr id="<%=rs.getString("id")%>" style="cursor: pointer">
-          <td><%=rs.getString("nombre")%></td>
-          <td><%=rs.getString("descripcion")%></td>
-          <td><%=rs.getString("pdf")%></td>
-          <td><%=rs.getString("id_usuario")%></td>
-          <td><button class="btn btn-secondary" disabled><%=rs.getString("estado")%></button></td>
-          <td><%=rs.getString("comentario")%></td>
-          <td><%=rs.getString("idArea")%></td>
-        </tr>
-        <%
-          }
-          conexion.close();
-        %>
-        </tbody>
-      </table>
-    </div>
+    <table class="table table-striped table-bordered table-hover">
+      <thead class="thead-dark">
+      <tr>
+        <th>Nombre</th>
+        <th>Descripción</th>
+        <th>Documento</th>
+        <th>Usuario</th>
+        <th>Estado</th>
+        <th>Comentario</th>
+        <th>Area</th>
+      </tr>
+      </thead>
+      <tbody>
+      <%
+        st = conexion.prepareStatement("SELECT id, nombre, descripcion, pdf, id_usuario, estado, comentario, idArea FROM solicitud WHERE idArea=?");
+        st.setInt(1, area);
+        rs = st.executeQuery();
+        while (rs.next()) {
+      %>
+      <tr id="<%=rs.getString("id")%>" style="cursor: pointer">
+        <td><%=rs.getString("nombre")%></td>
+        <td><%=rs.getString("descripcion")%></td>
+        <td><%=rs.getString("pdf")%></td>
+        <td><%=rs.getString("id_usuario")%></td>
+        <td><button class="btn btn-secondary" disabled><%=rs.getString("estado")%></button></td>
+        <td><%=rs.getString("comentario")%></td>
+        <td><%=rs.getString("idArea")%></td>
+      </tr>
+      <%
+        }
+        conexion.close();
+      %>
+      </tbody>
+    </table>
+  </div>
 
-    <div class="col-md-4">
-      <!--Contenido de la parte con 3 columnas-->
-      <div style="border: 1px solid black; border-radius: 10px; padding: 10px;margin-right: 10px">
+  <div class="col-md-4">
+    <!--Contenido de la parte con 3 columnas-->
+    <div style="border: 1px solid black; border-radius: 10px; padding: 10px;margin-right: 10px">
       <p class="text-center">INFORMACION DE SOLICITUD</p>
-      <form>
+      <form method="POST">
         <label for="codigo">Codigo:</label> <input type="text" id="codigo" name="codigo" disabled><br>
         <label for="id_usuario">ID_usuario:</label><input type="text" id="id_usuario" name="id_usuario"disabled><br>
         <label for="nombre">Nombre:</label><input type="text" id="nombre" name="nombre" disabled><br>
@@ -84,50 +83,60 @@
         <textarea id="descripcion" name="descripcion" rows="4" cols="30" disabled></textarea><br>
         <label for="descripcion">Comentario</label><br>
         <textarea id="comenta" name="comenta" rows="4" cols="30"></textarea><br><br>
-        <input type="submit" name="aprobado" id="aprobado" value="Aceptar" class="btn btn-info float-left">
-        <input type="submit" class="btn btn-danger float-right" id="rechazado" name="rechazado" value="rechazado">
+        <label for="estado">Opcion</label>
+        <select name="estado" id="estado">
+          <option value=""></option>
+          <option value="aprobado">Aceptar</option>
+          <option value="rechazado">Rechazar</option>
+        </select>
+        <br>
+        <input type="submit" class="btn btn-success" name="actualizar" value="actualizar">
         <br><br>
       </form>
-      </div>
     </div>
-    <%
-      //Sacamos los parametros del form para que se actualicen
+  </div>
+  <%
+    //Sacamos los parametros del form para que se actualicen
     String comenta = request.getParameter("comenta");
     String codigo = request.getParameter("codigo");//Es el id en tabla
     //Esta variable será la que haga el cambio de aprobado o rechazado
     String estado = "";
-      if (request.getParameter("aprobado") != null) {
-        estado = "Aprobado";
-      } else if (request.getParameter("rechazado") != null) {
-        estado = "Rechazado";
-      }
 
-      try {
-        st = conexion.prepareStatement("UPDATE solicitud SET estado=?, comentario=? WHERE id=?");
-        st.setString(1, estado);
-        st.setString(2, comenta);
-        st.setInt(3, Integer.parseInt(codigo));
-        // Ejecutamos la consulta
-        st.executeUpdate();
+    if (request.getParameter("aprobado") != null) {
+      estado = "Aprobado";
+    } else if (request.getParameter("rechazado") != null) {
+      estado = "Rechazado";
+    }
 
-        st.close();
+    try {
+      st = conexion.prepareStatement("UPDATE solicitud SET estado=?, comentario=? WHERE id=?");
+      st.setString(1, estado);
+      st.setString(2, comenta);
+      st.setInt(3, Integer.parseInt(codigo));
+      // Ejecutamos la consulta
+      st.executeUpdate();
 
-        // Cerramos los objetos de conexión y consulta
+      st.close();
 
-      } catch (Exception e) {
+      // Cerramos los objetos de conexión y consulta
+
+    } catch (Exception e) {
 
       out.println("<p> Error al procesar la solicitud: " + e.getMessage() + "</p>");
       out.println("<p>Comentario: " + comenta + "</p>");
       out.println("<p> Estado: " + estado + "</p>");
-        e.printStackTrace();
+      e.printStackTrace();
 
-      }finally {
+    }finally {
 
-        conexion.close();
+      conexion.close();
 
-      }
-    %>
-  </div>
+    }
+
+  %>
+
+
+</div>
 <script>
   $('tr').click(function() {
     // Obtener los valores de la fila seleccionada
@@ -145,7 +154,6 @@
     $('#doc').val(pdf);
     $('#nombre').val(nombre);
     $('#descripcion').val(descripcion);
-    $('#estado').val(estado);
     $('#comenta').val(comentario);
   });
 </script>
