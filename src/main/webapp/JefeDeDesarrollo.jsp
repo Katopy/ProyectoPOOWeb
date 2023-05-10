@@ -40,11 +40,11 @@
         <tr>
           <th>Nombre</th>
           <th>Descripción</th>
-          <th>Area</th>
           <th>Documento</th>
           <th>Usuario</th>
           <th>Estado</th>
           <th>Comentario</th>
+          <th>Area</th>
         </tr>
         </thead>
         <tbody>
@@ -57,11 +57,11 @@
         <tr id="<%=rs.getString("id")%>" style="cursor: pointer">
           <td><%=rs.getString("nombre")%></td>
           <td><%=rs.getString("descripcion")%></td>
-          <td><%=rs.getString("idArea")%></td>
           <td><%=rs.getString("pdf")%></td>
           <td><%=rs.getString("id_usuario")%></td>
           <td><button class="btn btn-secondary" disabled><%=rs.getString("estado")%></button></td>
           <td><%=rs.getString("comentario")%></td>
+          <td><%=rs.getString("idArea")%></td>
         </tr>
         <%
           }
@@ -91,7 +91,7 @@
       </div>
     </div>
     <%
-      //Sacamos los parametros para que se actualicen
+      //Sacamos los parametros del form para que se actualicen
     String comenta = request.getParameter("comenta");
     String codigo = request.getParameter("codigo");//Es el id en tabla
     //Esta variable será la que haga el cambio de aprobado o rechazado
@@ -110,15 +110,21 @@
         // Ejecutamos la consulta
         st.executeUpdate();
 
-
         st.close();
-        conexion.close();
+
         // Cerramos los objetos de conexión y consulta
 
       } catch (Exception e) {
+
       out.println("<p> Error al procesar la solicitud: " + e.getMessage() + "</p>");
       out.println("<p>Comentario: " + comenta + "</p>");
       out.println("<p> Estado: " + estado + "</p>");
+        e.printStackTrace();
+
+      }finally {
+
+        conexion.close();
+
       }
     %>
   </div>
@@ -139,6 +145,7 @@
     $('#doc').val(pdf);
     $('#nombre').val(nombre);
     $('#descripcion').val(descripcion);
+    $('#estado').val(estado);
     $('#comenta').val(comentario);
   });
 </script>
