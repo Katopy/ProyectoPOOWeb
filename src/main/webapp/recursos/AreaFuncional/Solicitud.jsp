@@ -4,6 +4,7 @@
     HttpSession session_actual = request.getSession(false);
     String usuario = (String) session_actual.getAttribute("USER");
     String nombres = (String) session_actual.getAttribute("NAME");
+    int area = (int) session_actual.getAttribute("idArea");
     if (usuario == null) {
         response.sendRedirect("../../login.html");
     }
@@ -36,6 +37,7 @@
 
     <!--Insertamos los datos de la solicitud-->
     <%
+
         String descripcion = request.getParameter("descripcionCaso");
         String pdf = request.getParameter("pdf");
         // Verificamos que el método de la petición sea POST
@@ -47,20 +49,20 @@
             else {
                 try {
                     // Preparamos la consulta SQL
-                    st = conexion.prepareStatement("INSERT INTO solicitud (nombre, descripcion, pdf, id_usuario, estado, comentario) VALUES (?,?,?,?,?,?)");
+                    st = conexion.prepareStatement("INSERT INTO solicitud (nombre, descripcion, pdf, id_usuario, estado, comentario, idArea) VALUES (?,?,?,?,?,?,?)");
                     st.setString(1, nombres);
                     st.setString(2, descripcion);
 
                     if (pdf != null) {
                         st.setString(3, pdf);
                     } else {
-                        st.setNull(3, java.sql.Types.BLOB);
+                        st.setNull(3, Types.BLOB);
                     }
 
                     st.setString(4, usuario);
                     st.setString(5, "En espera");
                     st.setString(6, "");
-
+                    st.setInt(7, area);
                     // Ejecutamos la consulta
                     st.executeUpdate();
 
@@ -72,6 +74,7 @@
                     response.sendRedirect("../../JefeAreaFuncional.jsp?SolicitudExitosa");
                 } catch (Exception e) {
                     out.println("<p>Error al procesar la solicitud: " + e.getMessage() + "</p>");
+
                 }
             }
         }

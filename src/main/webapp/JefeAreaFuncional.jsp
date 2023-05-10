@@ -3,12 +3,11 @@
 <%@ page import="jakarta.servlet.http.HttpSession" %>
 <%@ include file="conexion.jsp" %>
 
-
-
 <%
     HttpSession session_actual = request.getSession(false);
     String usuario = (String) session_actual.getAttribute("USER");
     String nombres = (String) session_actual.getAttribute("NAME");
+
     if (usuario == null) {
         response.sendRedirect("login.html");
     }

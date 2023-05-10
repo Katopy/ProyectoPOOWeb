@@ -75,7 +75,7 @@
       <!--Contenido de la parte con 3 columnas-->
       <div style="border: 1px solid black; border-radius: 10px; padding: 10px;margin-right: 10px">
       <p class="text-center">INFORMACION DE SOLICITUD</p>
-      <form action="">
+      <form>
         <label for="codigo">Codigo:</label> <input type="text" id="codigo" name="codigo" disabled><br>
         <label for="id_usuario">ID_usuario:</label><input type="text" id="id_usuario" name="id_usuario"disabled><br>
         <label for="nombre">Nombre:</label><input type="text" id="nombre" name="nombre" disabled><br>
@@ -84,8 +84,8 @@
         <textarea id="descripcion" name="descripcion" rows="4" cols="30" disabled></textarea><br>
         <label for="descripcion">Comentario</label><br>
         <textarea id="comenta" name="comenta" rows="4" cols="30"></textarea><br><br>
-        <button class="btn btn-info float-left" id="aprobado" name="aprobado">Aceptar</button>
-        <button class="btn btn-danger float-right" id="rechazado" name="rechazado">Rechazar</button>
+        <input type="submit" name="aprobado" id="aprobado" value="Aceptar" class="btn btn-info float-left">
+        <input type="submit" class="btn btn-danger float-right" id="rechazado" name="rechazado" value="rechazado">
         <br><br>
       </form>
       </div>
@@ -110,13 +110,15 @@
         // Ejecutamos la consulta
         st.executeUpdate();
 
-        // Cerramos los objetos de conexión y consulta
+
         st.close();
         conexion.close();
+        // Cerramos los objetos de conexión y consulta
+
       } catch (Exception e) {
       out.println("<p> Error al procesar la solicitud: " + e.getMessage() + "</p>");
-      out.println("<p> " + comenta + "</p>");
-      out.println("<p>  " + estado + "</p>");
+      out.println("<p>Comentario: " + comenta + "</p>");
+      out.println("<p> Estado: " + estado + "</p>");
       }
     %>
   </div>
