@@ -6,10 +6,6 @@
   String usuario = (String) session_actual.getAttribute("USER");
   String nombres = (String) session_actual.getAttribute("NAME");
   int area = (int) session_actual.getAttribute("idArea");
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
   if (usuario == null) {
     response.sendRedirect("login.html");
   }
@@ -73,6 +69,7 @@
       %>
       </tbody>
     </table>
+    <a href="recursos/JefeDesarrollo/VerCasos.jsp" ><button class="btn btn-info">Ver casos</button> </a>
   </div>
 
   <div class="col-md-4">
@@ -100,50 +97,6 @@
       </form>
     </div>
   </div>
-<<<<<<< Updated upstream
-  <%
-    //Sacamos los parametros del form para que se actualicen
-    String comenta = request.getParameter("comenta");
-    String codigo = request.getParameter("codigo");//Es el id en tabla
-    //Esta variable será la que haga el cambio de aprobado o rechazado
-    String estado = "";
-
-    if (request.getParameter("aprobado") != null) {
-      estado = "Aprobado";
-    } else if (request.getParameter("rechazado") != null) {
-      estado = "Rechazado";
-    }
-
-    try {
-      st = conexion.prepareStatement("UPDATE solicitud SET estado=?, comentario=? WHERE id=?");
-      st.setString(1, estado);
-      st.setString(2, comenta);
-      st.setInt(3, Integer.parseInt(codigo));
-      // Ejecutamos la consulta
-      st.executeUpdate();
-
-      st.close();
-
-      // Cerramos los objetos de conexión y consulta
-
-    } catch (Exception e) {
-
-      out.println("<p> Error al procesar la solicitud: " + e.getMessage() + "</p>");
-      out.println("<p>Comentario: " + comenta + "</p>");
-      out.println("<p> Estado: " + estado + "</p>");
-      e.printStackTrace();
-
-    }finally {
-
-      conexion.close();
-
-    }
-
-  %>
-
-
-=======
->>>>>>> Stashed changes
 </div>
 
 <script>
@@ -166,10 +119,5 @@
     $('#comenta').val(comentario);
   });
 </script>
-<<<<<<< Updated upstream
-
-
-=======
->>>>>>> Stashed changes
 </body>
 </html>

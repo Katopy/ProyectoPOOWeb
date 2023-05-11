@@ -41,7 +41,7 @@
             </thead>
             <tbody>
             <%
-                st = conexion.prepareStatement("SELECT id, nombre, descripcion, pdf, id_usuario, estado, comentario, idArea FROM solicitud WHERE  idArea=?");
+                st = conexion.prepareStatement("SELECT id, nombre, descripcion, pdf, id_usuario, estado, comentario, idArea FROM solicitud WHERE  idArea=? AND estado='aprobado'");
                 st.setInt(1, area);
                 rs = st.executeQuery();
                 while (rs.next()) {
@@ -61,7 +61,6 @@
             %>
             </tbody>
         </table>
-        <i><p> Casos Aprobados: </i><a href="recursos/JefeDesarrollo/VerCasos.jsp"><button class="btn btn-primary text-center">Ver Casos</button></a></p>
     </div>
 
 </div>
