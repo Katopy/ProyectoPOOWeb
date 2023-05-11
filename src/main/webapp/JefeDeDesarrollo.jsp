@@ -24,7 +24,6 @@
 <jsp:include page="menu.jsp"/>
 <br><br><br>
 <p>Usuario:<i> <%=nombres%> </i></p>
-<p>ID Area: <i><%=area%></i></p>
 <h4 class="text-center">
   Nuevas Solicitudes de casos
 </h4>
@@ -47,7 +46,7 @@
       </thead>
       <tbody>
       <%
-        st = conexion.prepareStatement("SELECT id, nombre, descripcion, pdf, id_usuario, estado, comentario, idArea FROM solicitud WHERE idArea=?");
+        st = conexion.prepareStatement("SELECT id, nombre, descripcion, pdf, id_usuario, estado, comentario, idArea FROM solicitud WHERE idArea=? and estado='En espera'");
         st.setInt(1, area);
         rs = st.executeQuery();
         while (rs.next()) {
@@ -68,8 +67,11 @@
         conexion.close();
       %>
       </tbody>
+
     </table>
-    <a href="recursos/JefeDesarrollo/VerCasos.jsp" ><button class="btn btn-info">Ver casos</button> </a>
+    <hr>
+    <a href="recursos/JefeDesarrollo/VerCasos.jsp" ><button class="btn btn-info">Ver casos Aprobados</button> </a>
+    <a href="recursos/JefeDesarrollo/VerCasosRep.jsp" ><button class="btn btn-info">Ver casos Reprobado</button> </a>
   </div>
 
   <div class="col-md-4">

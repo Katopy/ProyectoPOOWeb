@@ -21,10 +21,10 @@
 <jsp:include page="../../menu.jsp"/>
 <br><br><br>
 <h4 class="text-center">
-    Casos Aprobados
+    Casos Reprobados
 </h4>
-<div class="row">
-    <div class="col-md-8">
+
+    <div class="col-md-8 m-auto">
         <!--Contenido de la parte con 8 columnas-->
 
         <table class="table table-striped table-bordered table-hover">
@@ -41,7 +41,7 @@
             </thead>
             <tbody>
             <%
-                st = conexion.prepareStatement("SELECT id, nombre, descripcion, pdf, id_usuario, estado, comentario, idArea FROM solicitud WHERE  idArea=? AND estado='aprobado'");
+                st = conexion.prepareStatement("SELECT id, nombre, descripcion, pdf, id_usuario, estado, comentario, idArea FROM solicitud WHERE  idArea=? AND estado='rechazado'");
                 st.setInt(1, area);
                 rs = st.executeQuery();
                 while (rs.next()) {
@@ -61,39 +61,11 @@
             %>
             </tbody>
         </table>
-        <div class="m-auto text-center">
-            <a href="../../JefeDeDesarrollo.jsp" ><button class="btn btn-info ">Regresar</button></a>
-        </div>
     </div>
 
-    <div class="col-md-4">
-        <!--Contenido de la parte con 3 columnas-->
-        <div style="border: 1px solid black; border-radius: 10px; padding: 10px;margin-right: 10px">
-            <p class="text-center">Asignación de Caso</p>
-            <hr>
-            <form method="POST">
-                <label for="cod">Codigo: </label>
-                <input type="text" name="cod" id="cod"><br><br>
-                <label for="AsignarC">Asignar Caso: </label>
-                <select name="AsignarC" id="AsignarC">
-                <option value=""></option>
-            </select><br><br>
-                <label for="fechaL">Fecha limite: </label>
-                <input type="date" id="fechaL" name="fechaL"> <br><br>
-                <label for="descripcion">Descripción: </label>
-                <textarea id="descripcion" name="descripcion" rows="4" cols="30"></textarea><br><br>
-                <label for="docu">PDF(opcional):</label>
-                <input type="file" id="docu" name="docu"><br> <br>
-                <div class="text-center m-auto">
-                <input type="submit" class="btn btn-dark" name="actualizar" value="actualizar">
-                </div>
-                    <br>
-            </form>
-        </div>
-    </div>
+<div class="m-auto text-center">
+    <a href="../../JefeDeDesarrollo.jsp" ><button class="btn btn-info ">Regresar</button></a>
 </div>
-
-
 
 </body>
 </html>
