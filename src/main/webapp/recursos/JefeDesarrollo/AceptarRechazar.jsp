@@ -25,17 +25,14 @@
             st.close();
             conexion.close();
             out.println("<p>Los datos fueron ingresados de manera correcta</p>");
+            response.sendRedirect("../../JefeDeDesarrollo.jsp");
         } catch (SQLException e) {
             e.printStackTrace();
-            out.println("<p>Error al procesar los datos: "+ e.getMessage() +"</p><br>");
-            out.println("<p>"+ estado +"</p>");
-            out.println("<p>"+ comentario +"</p>");
-            out.println("<p>"+ codigo +"</p>");
         }
     } else {
         out.println("<p>Error: El código es nulo o vacío</p>");
+        response.sendRedirect("../../JefeDeDesarrollo.jsp");
     }
 
  }
-    //response.sendRedirect("../../JefeDeDesarrollo.jsp");
 %>
