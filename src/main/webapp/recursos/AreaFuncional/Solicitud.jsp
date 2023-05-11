@@ -1,3 +1,4 @@
+<%@ page import="java.util.Calendar" %>
 <%@ include file="../../conexion.jsp" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
@@ -35,8 +36,16 @@
         <input type="submit" value="Solicitar" class="btn btn-primary">
     </form>
 
+
+
     <!--Insertamos los datos de la solicitud-->
     <%
+
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+        String yearYY = Integer.toString(year).substring(2, 4);
+
+
+
 
         String descripcion = request.getParameter("descripcionCaso");
         String pdf = request.getParameter("pdf");
@@ -79,6 +88,8 @@
         }
     %>
 
+
+    <p>Formato YY:<i> <%=yearYY%> </i></p>
 </div>
 </body>
 </html>
