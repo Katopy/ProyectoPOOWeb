@@ -6,7 +6,10 @@
   String usuario = (String) session_actual.getAttribute("USER");
   String nombres = (String) session_actual.getAttribute("NAME");
   int area = (int) session_actual.getAttribute("idArea");
+<<<<<<< Updated upstream
 
+=======
+>>>>>>> Stashed changes
   if (usuario == null) {
     response.sendRedirect("login.html");
   }
@@ -64,6 +67,8 @@
       </tr>
       <%
         }
+        rs.close();
+        st.close();
         conexion.close();
       %>
       </tbody>
@@ -74,8 +79,8 @@
     <!--Contenido de la parte con 3 columnas-->
     <div style="border: 1px solid black; border-radius: 10px; padding: 10px;margin-right: 10px">
       <p class="text-center">INFORMACION DE SOLICITUD</p>
-      <form method="POST">
-        <label for="codigo">Codigo:</label> <input type="text" id="codigo" name="codigo" disabled><br>
+      <form method="POST" action="recursos/JefeDesarrollo/AceptarRechazar.jsp">
+        <label for="codigo">Codigo:</label> <input type="text" id="codigo" name="codigo" readonly><br>
         <label for="id_usuario">ID_usuario:</label><input type="text" id="id_usuario" name="id_usuario"disabled><br>
         <label for="nombre">Nombre:</label><input type="text" id="nombre" name="nombre" disabled><br>
         <label for="doc">Documento:</label><input type="text" id="doc" name="doc" disabled><br>
@@ -95,6 +100,7 @@
       </form>
     </div>
   </div>
+<<<<<<< Updated upstream
   <%
     //Sacamos los parametros del form para que se actualicen
     String comenta = request.getParameter("comenta");
@@ -136,7 +142,10 @@
   %>
 
 
+=======
+>>>>>>> Stashed changes
 </div>
+
 <script>
   $('tr').click(function() {
     // Obtener los valores de la fila seleccionada
@@ -157,7 +166,10 @@
     $('#comenta').val(comentario);
   });
 </script>
+<<<<<<< Updated upstream
 
 
+=======
+>>>>>>> Stashed changes
 </body>
 </html>
