@@ -22,7 +22,8 @@
         String empleadoTipo = "";
 
         try {
-            st = conexion.prepareStatement("SELECT usuariologin, nombre, empleadoTipo, idArea FROM usuarios WHERE usuariologin=? and passwordlogin=?");
+            st = conexion.prepareStatement("SELECT U.usuariologin, U.nombre, U.empleadoTipo,U.idArea, t.codigoArea FROM usuarios U INNER JOIN tabla_areas t ON U.idArea = t.idArea WHERE usuariologin=? and passwordlogin=?");
+            //st = conexion.prepareStatement("SELECT usuariologin, nombre, empleadoTipo, idArea FROM usuarios WHERE usuariologin=? and passwordlogin=?");
             st.setString(1, usuario);
             st.setString(2, password);
             rs = st.executeQuery();
@@ -33,6 +34,7 @@
                 session_actual.setAttribute("USER", usuario);
                 session_actual.setAttribute("NAME", rs.getString(2));
                 session_actual.setAttribute("idArea", rs.getInt(4));
+                session_actual.setAttribute("codigoArea", rs.getString(5));
 
                 //Si el usuario tiene acceso de manera exitosa, deberá redigir a su vista respectiva
                 if(empleadoTipo.equals("JefeAreaFuncional")){

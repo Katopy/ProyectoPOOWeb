@@ -30,13 +30,15 @@
         <table class="table table-striped table-bordered table-hover">
             <thead class="thead-dark">
             <tr>
+
                 <th>Nombre</th>
+                <th>Id consulta</th>
                 <th>Descripción</th>
                 <th>Documento</th>
                 <th>Usuario</th>
                 <th>Estado</th>
                 <th>Comentario</th>
-                <th>Area</th>
+
             </tr>
             </thead>
             <tbody>
@@ -47,13 +49,13 @@
                 while (rs.next()) {
             %>
             <tr id="<%=rs.getString("id")%>" style="cursor: pointer">
+                <td><%=rs.getInt("id")%></td>
                 <td><%=rs.getString("nombre")%></td>
                 <td><%=rs.getString("descripcion")%></td>
                 <td><%=rs.getString("pdf")%></td>
                 <td><%=rs.getString("id_usuario")%></td>
                 <td><button class="btn btn-secondary" disabled><%=rs.getString("estado")%></button></td >
                 <td><%=rs.getString("comentario")%></td>
-                <td><%=rs.getString("idArea")%></td>
             </tr>
             <%
                 }

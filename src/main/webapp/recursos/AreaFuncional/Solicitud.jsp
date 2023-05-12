@@ -1,4 +1,6 @@
 <%@ page import="java.util.Calendar" %>
+<%@ page import="java.time.LocalDate" %>
+<%@ page import="java.time.format.DateTimeFormatter" %>
 <%@ include file="../../conexion.jsp" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%
@@ -40,12 +42,8 @@
 
     <!--Insertamos los datos de la solicitud-->
     <%
-
         int year = Calendar.getInstance().get(Calendar.YEAR);
         String yearYY = Integer.toString(year).substring(2, 4);
-
-
-
 
         String descripcion = request.getParameter("descripcionCaso");
         String pdf = request.getParameter("pdf");
@@ -57,8 +55,14 @@
             }
             else {
                 try {
-                    // Preparamos la consulta SQL
-                    st = conexion.prepareStatement("INSERT INTO solicitud (nombre, descripcion, pdf, id_usuario, estado, comentario, idArea) VALUES (?,?,?,?,?,?,?)");
+                    // Obtener la fecha actual
+                    LocalDate fechaActual = LocalDate.now();
+
+                    // Crear un objeto DateTimeFormatter para formatear la fecha
+                    DateTimeFormatter formatoFecha = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+                    // Preparar la consulta SQL con la fecha formateada
+                    st = conexion.prepareStatement("INSERT INTO solicitud (nombre, descripcion, pdf, id_usuario, estado, comentario, idArea, fecha_creada) VALUES (?,?,?,?,?,?,?, ?)");
                     st.setString(1, nombres);
                     st.setString(2, descripcion);
 
@@ -71,25 +75,24 @@
                     st.setString(5, "En espera");
                     st.setString(6, "");
                     st.setInt(7, area);
-                    // Ejecutamos la consulta
+                    st.setString(8, formatoFecha.format(fechaActual)); // insertar la fecha formateada
+
+                    // Ejecutar la consulta
                     st.executeUpdate();
 
-                    // Cerramos los objetos de conexión y consulta
+                    // Cerrar los objetos de conexión y consulta
                     st.close();
                     conexion.close();
 
-                    //Redirigimos a la página de éxito
+                    // Redirigir a la página de éxito
                     response.sendRedirect("../../JefeAreaFuncional.jsp?SolicitudExitosa");
                 } catch (Exception e) {
                     out.println("<p>Error al procesar la solicitud: " + e.getMessage() + "</p>");
-
                 }
+
             }
         }
     %>
-
-
-    <p>Formato YY:<i> <%=yearYY%> </i></p>
 </div>
 </body>
 </html>

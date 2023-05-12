@@ -13,16 +13,17 @@
     }
 %>
 
-<% if ("POST".equals(request.getMethod()) && request.getParameter("actualizar") != null) {
+<% if ("POST".equals(request.getMethod()) && request.getParameter("Asignar") != null) {
     // Obtener los valores del formulario enviado
-    String codigo = request.getParameter("codigo");
-    String estado = request.getParameter("estado");
-    String comentario = request.getParameter("comenta");
+    String idd = request.getParameter("idd");
+    String cod = request.getParameter("cod");
+    String AsignarC = request.getParameter("AsignarC");//Desarrollador
+    String fechaL = request.getParameter("fechaL");
 
-
-    if (codigo != null && !codigo.isEmpty()) {
+    if (idd != null && !idd.isEmpty()) {
         try{
-            st = conexion.prepareStatement("UPDATE solicitud SET estado='" + estado + "', comentario='" + comentario + "' WHERE id=" + codigo + "");
+        st = conexion.prepareStatement("UPDATE solicitud SET estado='En desarrollo', codigoCaso='"+cod+"', programador='"+AsignarC+"', fecha_limite='"+fechaL+"' WHERE id='"+idd+"'");
+            //st = conexion.prepareStatement("UPDATE solicitud SET estado='" + estado + "', comentario='" + comentario + "' WHERE id=" + codigo + "");
             st.executeUpdate();
             st.close();
             conexion.close();
@@ -33,8 +34,8 @@
         }
     } else {
         out.println("<p>Error: El código es nulo o vacío</p>");
-        response.sendRedirect("../../JefeDeDesarrollo.jsp=?ElCasoHaSidoRevisado");
+        response.sendRedirect("../../JefeDeDesarrollo.jsp");
     }
 
- }
+}
 %>
