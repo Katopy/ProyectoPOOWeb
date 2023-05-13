@@ -91,7 +91,7 @@
         <textarea id="descripcion" name="descripcion" rows="4" cols="30" disabled></textarea><br>
         <label for="descripcion">Comentario</label><br>
         <textarea id="comenta" name="comenta" rows="4" cols="30"></textarea><br><br>
-        <label for="estado">Opcion</label>
+        <label for="estado">Estado</label>
         <select name="estado" id="estado">
           <option value=""></option>
           <option value="aprobado">Aceptar</option>
@@ -109,18 +109,17 @@
   $('tr').click(function() {
     // Obtener los valores de la fila seleccionada
     var id = $(this).attr('id');
-    var nombre = $(this).find('td:eq(0)').text();
-    var descripcion = $(this).find('td:eq(1)').text();
-    var pdf = $(this).find('td:eq(2)').text();
-    var id_usuario = $(this).find('td:eq(3)').text();
-    var estado = $(this).find('td:eq(4)').text();
+    var nombre = $(this).find('td:eq(1)').text();
+    var descripcion = $(this).find('td:eq(2)').text();
+    var pdf = $(this).find('td:eq(3)').text();
+    var id_usuario = $(this).find('td:eq(4)').text();
     var comentario = $(this).find('td:eq(5)').text();
 
     // Actualizar los campos de texto en la columna col-md-4
     $('#codigo').val(id);
     $('#id_usuario').val(id_usuario);
-    $('#doc').val(pdf);
     $('#nombre').val(nombre);
+    $('#doc').val(pdf);
     $('#descripcion').val(descripcion);
     $('#comenta').val(comentario);
   });
